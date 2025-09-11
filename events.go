@@ -1,6 +1,7 @@
 // Package events defines the standardized, multi-tenant NATS message payloads.
 // This package establishes the explicit communication contract between microservices,
-// ensuring a consistent and trackable data flow for the entire document processing pipeline.
+// ensuring a consistent and trackable data flow for the entire document processing
+// pipeline.
 // Adherence to these structures is mandatory for inter-service communication.
 package events
 
@@ -9,16 +10,11 @@ import "time"
 // EventHeader is the mandatory metadata structure embedded in all NATS events.
 // It provides the necessary context for multi-tenancy, security, and distributed tracing.
 type EventHeader struct {
-	// WorkflowID is the unique identifier for an entire end-to-end document process.
-	WorkflowID string `json:"workflow_id"`
-	// UserID identifies the specific user who initiated the workflow.
-	UserID string `json:"user_id"`
-	// TenantID isolates data and processing for a specific customer or organization.
-	TenantID string `json:"tenant_id"`
-	// EventID is a unique identifier for this specific event instance.
-	EventID string `json:"event_id"`
-	// Timestamp records when the event was created.
-	Timestamp time.Time `json:"timestamp"`
+	Timestamp  time.Time `json:"timestamp"`
+	WorkflowID string    `json:"workflow_id"`
+	UserID     string    `json:"user_id"`
+	TenantID   string    `json:"tenant_id"`
+	EventID    string    `json:"event_id"`
 }
 
 // PDFCreatedEvent is published by the API Gateway to initiate a new workflow.
@@ -59,7 +55,8 @@ type TextProcessedEvent struct {
 // successfully generated audio segment.
 type AudioChunkCreatedEvent struct {
 	Header EventHeader `json:"header"`
-	// AudioKey is the unique identifier for the generated audio chunk in the object store.
+	// AudioKey is the unique identifier for the generated audio chunk in the object
+	// store.
 	AudioKey string `json:"audio_key"`
 	// PageNumber is the 1-based index of this page within the original document.
 	PageNumber int `json:"page_number"`
