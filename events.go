@@ -43,8 +43,8 @@ type TextProcessedEvent struct {
 	Header EventHeader `json:"header"`
 	// PNGKey is the identifier of the source PNG image that was processed.
 	PNGKey string `json:"png_key"`
-	// FinalText contains the processed and cleaned text result.
-	FinalText string `json:"final_text"`
+	// TextKey is the unique identifier for the processed text in the object store.
+	TextKey string `json:"text_key"`
 	// PageNumber is the 1-based index of this page within the original document.
 	PageNumber int `json:"page_number"`
 	// TotalPages is the total number of pages in the original document.
