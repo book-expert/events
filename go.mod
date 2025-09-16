@@ -1,3 +1,3 @@
-module github.com/nnikolov3/events
+module github.com/book-expert/events
 
-go 1.25.0
+go 1.25.1
