@@ -49,6 +49,18 @@ type TextProcessedEvent struct {
 	PageNumber int `json:"page_number"`
 	// TotalPages is the total number of pages in the original document.
 	TotalPages int `json:"total_pages"`
+	// Voice is the voice to be used for the text-to-speech conversion.
+	Voice string `json:"voice,omitempty"`
+	// Seed is the seed for the random number generator.
+	Seed int `json:"seed,omitempty"`
+	// NGL is the number of layers to offload to the GPU.
+	NGL int `json:"ngl,omitempty"`
+	// TopP is the top-p sampling value.
+	TopP float64 `json:"top_p,omitempty"`
+	// RepetitionPenalty is the repetition penalty.
+	RepetitionPenalty float64 `json:"repetition_penalty,omitempty"`
+	// Temperature is the temperature for the sampling.
+	Temperature float64 `json:"temperature,omitempty"`
 }
 
 // AudioChunkCreatedEvent is published by the text-to-speech service for each
