@@ -75,3 +75,16 @@ type AudioChunkCreatedEvent struct {
 	// TotalPages is the total number of pages in the original document.
 	TotalPages int `json:"total_pages"`
 }
+
+// WavFileCreatedEvent is published by the pcm-to-wav-service for each
+// successfully generated wav file.
+type WavFileCreatedEvent struct {
+	Header EventHeader `json:"header"`
+	// WavKey is the unique identifier for the generated wav file in the object
+	// store.
+	WavKey string `json:"wav_key"`
+	// PageNumber is the 1-based index of this page within the original document.
+	PageNumber int `json:"page_number"`
+	// TotalPages is the total number of pages in the original document.
+	TotalPages int `json:"total_pages"`
+}
