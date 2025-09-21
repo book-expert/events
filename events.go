@@ -88,3 +88,12 @@ type WavFileCreatedEvent struct {
 	// TotalPages is the total number of pages in the original document.
 	TotalPages int `json:"total_pages"`
 }
+
+// FinalAudioCreatedEvent is published by the wav-aggregator-service after
+// successfully combining all wav files for a workflow.
+type FinalAudioCreatedEvent struct {
+	Header EventHeader `json:"header"`
+	// FinalAudioKey is the unique identifier for the combined audio file in the
+	// object store.
+	FinalAudioKey string `json:"final_audio_key"`
+}
