@@ -23,6 +23,8 @@ type PDFCreatedEvent struct {
 	Header EventHeader `json:"header"`
 	// PDFKey is the unique identifier for the uploaded PDF in the object store.
 	PDFKey string `json:"pdf_key"`
+	// Augmentation describes the narrator augmentation preferences supplied by the user.
+	Augmentation *AugmentationPreferences `json:"augmentation,omitempty"`
 }
 
 // PNGCreatedEvent is published by the pdf-to-png-service for each successfully
@@ -35,6 +37,37 @@ type PNGCreatedEvent struct {
 	PageNumber int `json:"page_number"`
 	// TotalPages is the total number of pages in the original document.
 	TotalPages int `json:"total_pages"`
+	// Augmentation carries the per-workflow augmentation preferences from the upload event.
+	Augmentation *AugmentationPreferences `json:"augmentation,omitempty"`
+}
+
+// SummaryPlacement identifies where page-level summaries should be inserted relative to OCR text.
+type SummaryPlacement string
+
+const (
+	// SummaryPlacementTop requests that summaries precede the raw OCR text.
+	SummaryPlacementTop SummaryPlacement = "top"
+	// SummaryPlacementBottom requests that summaries appear after the OCR text.
+	SummaryPlacementBottom SummaryPlacement = "bottom"
+)
+
+// AugmentationCommentarySettings controls commentary augmentation.
+type AugmentationCommentarySettings struct {
+	Enabled            bool   `json:"enabled"`
+	CustomInstructions string `json:"custom_instructions,omitempty"`
+}
+
+// AugmentationSummarySettings controls summary augmentation.
+type AugmentationSummarySettings struct {
+	Enabled            bool             `json:"enabled"`
+	Placement          SummaryPlacement `json:"placement"`
+	CustomInstructions string           `json:"custom_instructions,omitempty"`
+}
+
+// AugmentationPreferences aggregates narration augmentation options for a workflow.
+type AugmentationPreferences struct {
+	Commentary AugmentationCommentarySettings `json:"commentary"`
+	Summary    AugmentationSummarySettings    `json:"summary"`
 }
 
 // TextProcessedEvent is published by the png-to-text-service after successfully
