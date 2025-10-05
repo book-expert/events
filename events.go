@@ -11,10 +11,10 @@ import "time"
 // It provides the necessary context for multi-tenancy, security, and distributed tracing.
 type EventHeader struct {
 	Timestamp  time.Time `json:"timestamp"`
-	WorkflowID string    `json:"workflow_id"`
-	UserID     string    `json:"user_id"`
-	TenantID   string    `json:"tenant_id"`
-	EventID    string    `json:"event_id"`
+	WorkflowID string    `json:"workflowId"`
+	UserID     string    `json:"userId"`
+	TenantID   string    `json:"tenantId"`
+	EventID    string    `json:"eventId"`
 }
 
 // PDFCreatedEvent is published by the API Gateway to initiate a new workflow.
@@ -22,7 +22,7 @@ type EventHeader struct {
 type PDFCreatedEvent struct {
 	Header EventHeader `json:"header"`
 	// PDFKey is the unique identifier for the uploaded PDF in the object store.
-	PDFKey string `json:"pdf_key"`
+	PDFKey string `json:"pdfKey"`
 	// Augmentation describes the narrator augmentation preferences supplied by the user.
 	Augmentation *AugmentationPreferences `json:"augmentation,omitempty"`
 }
@@ -32,11 +32,11 @@ type PDFCreatedEvent struct {
 type PNGCreatedEvent struct {
 	Header EventHeader `json:"header"`
 	// PNGKey is the unique identifier for the generated PNG in the object store.
-	PNGKey string `json:"png_key"`
+	PNGKey string `json:"pngKey"`
 	// PageNumber is the 1-based index of this page within the original document.
-	PageNumber int `json:"page_number"`
+	PageNumber int `json:"pageNumber"`
 	// TotalPages is the total number of pages in the original document.
-	TotalPages int `json:"total_pages"`
+	TotalPages int `json:"totalPages"`
 	// Augmentation carries the per-workflow augmentation preferences from the upload event.
 	Augmentation *AugmentationPreferences `json:"augmentation,omitempty"`
 }
@@ -54,14 +54,14 @@ const (
 // AugmentationCommentarySettings controls commentary augmentation.
 type AugmentationCommentarySettings struct {
 	Enabled            bool   `json:"enabled"`
-	CustomInstructions string `json:"custom_instructions,omitempty"`
+	CustomInstructions string `json:"customInstructions,omitempty"`
 }
 
 // AugmentationSummarySettings controls summary augmentation.
 type AugmentationSummarySettings struct {
 	Enabled            bool             `json:"enabled"`
 	Placement          SummaryPlacement `json:"placement"`
-	CustomInstructions string           `json:"custom_instructions,omitempty"`
+	CustomInstructions string           `json:"customInstructions,omitempty"`
 }
 
 // AugmentationPreferences aggregates narration augmentation options for a workflow.
@@ -75,13 +75,13 @@ type AugmentationPreferences struct {
 type TextProcessedEvent struct {
 	Header EventHeader `json:"header"`
 	// PNGKey is the identifier of the source PNG image that was processed.
-	PNGKey string `json:"png_key"`
+	PNGKey string `json:"pngKey"`
 	// TextKey is the unique identifier for the processed text in the object store.
-	TextKey string `json:"text_key"`
+	TextKey string `json:"textKey"`
 	// PageNumber is the 1-based index of this page within the original document.
-	PageNumber int `json:"page_number"`
+	PageNumber int `json:"pageNumber"`
 	// TotalPages is the total number of pages in the original document.
-	TotalPages int `json:"total_pages"`
+	TotalPages int `json:"totalPages"`
 	// Voice is the voice to be used for the text-to-speech conversion.
 	Voice string `json:"voice,omitempty"`
 	// Seed is the seed for the random number generator.
@@ -89,9 +89,9 @@ type TextProcessedEvent struct {
 	// NGL is the number of layers to offload to the GPU.
 	NGL int `json:"ngl,omitempty"`
 	// TopP is the top-p sampling value.
-	TopP float64 `json:"top_p,omitempty"`
+	TopP float64 `json:"topP,omitempty"`
 	// RepetitionPenalty is the repetition penalty.
-	RepetitionPenalty float64 `json:"repetition_penalty,omitempty"`
+	RepetitionPenalty float64 `json:"repetitionPenalty,omitempty"`
 	// Temperature is the temperature for the sampling.
 	Temperature float64 `json:"temperature,omitempty"`
 }
@@ -102,11 +102,11 @@ type AudioChunkCreatedEvent struct {
 	Header EventHeader `json:"header"`
 	// AudioKey is the unique identifier for the generated audio chunk in the object
 	// store.
-	AudioKey string `json:"audio_key"`
+	AudioKey string `json:"audioKey"`
 	// PageNumber is the 1-based index of this page within the original document.
-	PageNumber int `json:"page_number"`
+	PageNumber int `json:"pageNumber"`
 	// TotalPages is the total number of pages in the original document.
-	TotalPages int `json:"total_pages"`
+	TotalPages int `json:"totalPages"`
 }
 
 // WavFileCreatedEvent is published by the pcm-to-wav-service for each
@@ -115,11 +115,11 @@ type WavFileCreatedEvent struct {
 	Header EventHeader `json:"header"`
 	// WavKey is the unique identifier for the generated wav file in the object
 	// store.
-	WavKey string `json:"wav_key"`
+	WavKey string `json:"wavKey"`
 	// PageNumber is the 1-based index of this page within the original document.
-	PageNumber int `json:"page_number"`
+	PageNumber int `json:"pageNumber"`
 	// TotalPages is the total number of pages in the original document.
-	TotalPages int `json:"total_pages"`
+	TotalPages int `json:"totalPages"`
 }
 
 // FinalAudioCreatedEvent is published by the wav-aggregator-service after
@@ -128,5 +128,5 @@ type FinalAudioCreatedEvent struct {
 	Header EventHeader `json:"header"`
 	// FinalAudioKey is the unique identifier for the combined audio file in the
 	// object store.
-	FinalAudioKey string `json:"final_audio_key"`
+	FinalAudioKey string `json:"finalAudioKey"`
 }

@@ -1,27 +1,31 @@
-package events
+package events_test
 
 import (
 	"encoding/json"
 	"testing"
 	"time"
+
+	"github.com/book-expert/events"
 )
 
 // TestAugmentationPreferencesRoundTrip ensures preferences survive JSON marshal/unmarshal.
 func TestAugmentationPreferencesRoundTrip(t *testing.T) {
-	original := AugmentationPreferences{
-		Commentary: AugmentationCommentarySettings{
+	t.Parallel()
+
+	original := events.AugmentationPreferences{
+		Commentary: events.AugmentationCommentarySettings{
 			Enabled:            true,
 			CustomInstructions: "Describe every chart.",
 		},
-		Summary: AugmentationSummarySettings{
+		Summary: events.AugmentationSummarySettings{
 			Enabled:            true,
-			Placement:          SummaryPlacementBottom,
+			Placement:          events.SummaryPlacementBottom,
 			CustomInstructions: "Provide two sentence overview.",
 		},
 	}
 
-	input := PNGCreatedEvent{
-		Header: EventHeader{
+	input := events.PNGCreatedEvent{
+		Header: events.EventHeader{
 			Timestamp:  time.Now().UTC(),
 			WorkflowID: "workflow-123",
 			UserID:     "user-456",
@@ -39,7 +43,8 @@ func TestAugmentationPreferencesRoundTrip(t *testing.T) {
 		t.Fatalf("marshal failed: %v", marshalErr)
 	}
 
-	var decoded PNGCreatedEvent
+	var decoded events.PNGCreatedEvent
+
 	unmarshalErr := json.Unmarshal(encoded, &decoded)
 	if unmarshalErr != nil {
 		t.Fatalf("unmarshal failed: %v", unmarshalErr)
